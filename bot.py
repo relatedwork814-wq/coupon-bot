@@ -94,13 +94,22 @@ async def handle_screenshot(update: Update, context: ContextTypes.DEFAULT_TYPE):
         caption=f"User: {user.id}"
     )
 
-def main():
+import asyncio
+
+async def main():
     app = Application.builder().token(BOT_TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.PHOTO, handle_screenshot))
 
-    app.run_polling()
+    print("Bot started...")
+
+    await app.initialize()
+    await app.start()
+    await app.run_polling()
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
 if __name__ == "__main__":
     main()
